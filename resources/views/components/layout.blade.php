@@ -21,6 +21,7 @@
         @endguest
 
         @auth
+            <a href="{{ route('recipes.index') }}">Recipes</a>
             <form method="POST" action="{{ route('session.destroy') }}">
                 @method("DELETE")
                 @csrf

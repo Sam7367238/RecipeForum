@@ -5,20 +5,21 @@ namespace App\Http\Controllers;
 use App\Models\Recipe;
 use App\Http\Requests\StoreRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
+use App\Services\RecipeService;
+use Illuminate\Support\Facades\Auth;
 
 class RecipeController extends Controller
 {
+    public function __construct(private RecipeService $service) {}
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $publicRecipes = Recipe::with("user")
-        -> where("private", false)
-        -> orderBy("created_at", "desc")
-        -> paginate(13);
+        $recipes = $this -> service -> all(false);
 
-        return view("recipes.index", compact("publicRecipes"));
+        return view("recipes.index", compact("recipes"));
     }
 
     /**
@@ -26,7 +27,7 @@ class RecipeController extends Controller
      */
     public function create()
     {
-        //
+        return view("recipes.create");
     }
 
     /**
@@ -34,7 +35,9 @@ class RecipeController extends Controller
      */
     public function store(StoreRecipeRequest $request)
     {
-        //
+        $recipe = $this -> service -> store(Auth::user(), $request);
+
+        return redirect() -> route("recipes.show", $recipe) -> with("status", "Recipe Created Successfully");
     }
 
     /**
