@@ -12,7 +12,7 @@
 
 <div>
     <label for="private">Private:</label>
-    <input type="checkbox" name="private" @checked(old('private' ?? $recipe -> private ?? ''))>
+    <input type="checkbox" name="private" @checked(old('private', $recipe -> private ?? ''))>
 </div>
 
 <input type="submit" value="Save">
