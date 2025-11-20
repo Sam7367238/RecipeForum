@@ -7,12 +7,12 @@ use App\Models\User;
 
 class RecipePolicy
 {
+
     /**
-     * Determine whether the user can view any models.
+     * Determine whether the user is the owner of the model.
      */
-    public function viewAny(User $user): bool
-    {
-        return false;
+    public function owner(User $user, Recipe $recipe) {
+        return $user -> id === $recipe -> user_id;
     }
 
     /**
@@ -20,46 +20,9 @@ class RecipePolicy
      */
     public function view(User $user, Recipe $recipe): bool
     {
-        return false;
-    }
+        $owner = $user -> id === $recipe -> user_id;
+        $private = $recipe -> private;
 
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(User $user): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can update the model.
-     */
-    public function update(User $user, Recipe $recipe): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can delete the model.
-     */
-    public function delete(User $user, Recipe $recipe): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can restore the model.
-     */
-    public function restore(User $user, Recipe $recipe): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Recipe $recipe): bool
-    {
-        return false;
+        return $owner || !$private;
     }
 }

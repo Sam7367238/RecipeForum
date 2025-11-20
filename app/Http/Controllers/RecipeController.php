@@ -7,6 +7,7 @@ use App\Http\Requests\StoreRecipeRequest;
 use App\Http\Requests\UpdateRecipeRequest;
 use App\Services\RecipeService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class RecipeController extends Controller
 {
@@ -17,9 +18,12 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        $recipes = $this -> service -> all(false);
+        $recipes = $this -> service -> all(Auth::user());
 
-        return view("recipes.index", compact("recipes"));
+        return view("recipes.index", [
+            "recipes" => $recipes["publicRecipes"],
+            "privateRecipes" => $recipes["privateRecipes"]
+        ]);
     }
 
     /**
@@ -45,6 +49,8 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
+        Gate::authorize("view", $recipe);
+
         return view("recipes.show", compact("recipe"));
     }
 
@@ -53,7 +59,9 @@ class RecipeController extends Controller
      */
     public function edit(Recipe $recipe)
     {
-        //
+        Gate::authorize("owner", $recipe);
+
+        return view("recipes.edit", compact("recipe"));
     }
 
     /**
@@ -61,7 +69,11 @@ class RecipeController extends Controller
      */
     public function update(UpdateRecipeRequest $request, Recipe $recipe)
     {
-        //
+        Gate::authorize("owner", $recipe);
+
+        $this -> service -> update($recipe, $request);
+
+        return redirect() -> route("recipes.show", $recipe) -> with("status", "Recipe Updated Successfully");
     }
 
     /**
@@ -69,6 +81,10 @@ class RecipeController extends Controller
      */
     public function destroy(Recipe $recipe)
     {
-        //
+        Gate::authorize("owner", $recipe);
+
+        $this -> service -> destroy($recipe);
+
+        return redirect() -> route("recipes.index") -> with("status", "Recipe Deleted Successfully");
     }
 }

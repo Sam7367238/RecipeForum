@@ -2,17 +2,16 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Recipe;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRecipeRequest extends FormRequest
+class StoreCommentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this -> user() -> can("owner", $this -> route("recipe"));
+        return false;
     }
 
     /**
@@ -23,8 +22,7 @@ class UpdateRecipeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "title" => ["required", "min:3"],
-            "recipe" => "required"
+            //
         ];
     }
 }

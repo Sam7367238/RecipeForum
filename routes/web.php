@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\SessionController;
@@ -18,5 +19,7 @@ Route::middleware("guest") -> group(function() {
 
 Route::middleware("auth") -> group(function() {
     Route::resource("recipes", RecipeController::class);
+    Route::resource("comments", CommentController::class);
+
     Route::delete("/logout", [SessionController::class, "destroy"]) -> name("session.destroy");
 });
