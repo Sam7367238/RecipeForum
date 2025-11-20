@@ -10,6 +10,7 @@ class Recipe extends Model
 {
     /** @use HasFactory<\Database\Factories\RecipeFactory> */
     use HasFactory;
+    protected $fillable = ["title", "recipe", "private"];
 
     public function user(): BelongsTo {
         return $this -> belongsTo(User::class);

@@ -13,7 +13,12 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        //
+        $publicRecipes = Recipe::with("user")
+        -> where("private", false)
+        -> orderBy("created_at", "desc")
+        -> paginate(13);
+
+        return view("recipes.index", compact("publicRecipes"));
     }
 
     /**
@@ -37,7 +42,7 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        //
+        return view("recipes.show", compact("recipe"));
     }
 
     /**

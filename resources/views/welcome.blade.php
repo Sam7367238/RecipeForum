@@ -1,5 +1,6 @@
 <x-layout title="Home">
-    <h1>Ayman's Starter Kit For Laravel 12</h1>
+    <h1>Recipe Forum</h1>
+    <p>Share your delicious recipes.</p>
 
     @guest
         <a href="{{ route('register') }}">Register</a>
@@ -7,6 +8,6 @@
     @endguest
 
     @auth
-        
+        <a href="{{ route('recipes.index') }}">Recipes</a>
     @endauth
 </x-layout>
