@@ -1,6 +1,8 @@
 <x-layout title="Create Recipe">
-    <x-forms.errors/>
+    <h1>Create Recipe</h1>
     
+    <x-forms.errors/>
+
     <form method="POST" action="{{ route('recipes.store') }}">
         @method("POST")
 

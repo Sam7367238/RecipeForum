@@ -5,6 +5,17 @@
 
     <hr>
 
+    @can("owner", $recipe)
+        <a href="{{ route('recipes.edit', $recipe) }}">Edit</a>
+
+        <form method="POST" action="{{ route('recipes.destroy', $recipe) }}">
+            @method("DELETE")
+            @csrf
+            
+            <input type="submit" value="Delete">
+        </form>
+    @endcan
+
     <p>Created At: {{ $recipe -> created_at -> diffForHumans() }}</p>
     <p>Author: {{ $recipe -> user -> name }}</p>
 </x-layout>
