@@ -23,5 +23,5 @@
         </div>
     @endforeach
 
-    {{ $recipes -> links() }}
+    {{ $recipes -> links("vendor/pagination/simple-default") }}
 </x-layout>

@@ -51,8 +51,4 @@ class User extends Authenticatable
     public function recipes(): HasMany {
         return $this -> hasMany(Recipe::class);
     }
-
-    public function comments(): HasManyThrough {
-        return $this -> hasManyThrough(Comment::class, Recipe::class);
-    }
 }

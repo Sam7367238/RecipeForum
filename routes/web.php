@@ -19,7 +19,8 @@ Route::middleware("guest") -> group(function() {
 
 Route::middleware("auth") -> group(function() {
     Route::resource("recipes", RecipeController::class);
-    Route::resource("comments", CommentController::class);
+    Route::resource("recipes.comments", CommentController::class) -> except(["show"]) -> scoped(["edit", "store", "destroy"]);
+    // Route::get("/recipes/{recipe}/comments/{comment}/edit", [CommentController::class, "edit"]) -> name("recipes.comments.edit") -> scopeBindings();
 
     Route::delete("/logout", [SessionController::class, "destroy"]) -> name("session.destroy");
 });

@@ -10,8 +10,13 @@ class Comment extends Model
 {
     /** @use HasFactory<\Database\Factories\CommentFactory> */
     use HasFactory;
+    protected $fillable = ["comment", "user_id"];
 
     public function recipe(): BelongsTo {
         return $this -> belongsTo(Recipe::class);
+    }
+
+    public function user(): BelongsTo {
+        return $this -> belongsTo(User::class);
     }
 }

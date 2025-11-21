@@ -11,7 +11,7 @@ class UpdateCommentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this -> user() -> can("owner", $this -> route("comment"));
     }
 
     /**
@@ -22,7 +22,7 @@ class UpdateCommentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "comment" => ["required", "min:3"]
         ];
     }
 }

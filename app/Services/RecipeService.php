@@ -18,8 +18,7 @@ class RecipeService {
 
     public function store($user, $request) {
         $recipe = $user -> recipes() -> create([
-            "title" => $request -> title,
-            "recipe" => $request -> recipe,
+            ...$request -> validated(),
             "private" => $request -> boolean("private")
         ]);
 
@@ -28,8 +27,7 @@ class RecipeService {
 
     public function update($recipe, $request) {
         $recipe -> update([
-            "title" => $request -> title,
-            "recipe" => $request -> recipe,
+            ...$request -> validated(),
             "private" => $request -> boolean("private")
         ]);
     }

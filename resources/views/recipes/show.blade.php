@@ -16,6 +16,8 @@
         </form>
     @endcan
 
+    <a href="{{ route('recipes.comments.index', $recipe) }}">Comments</a>
+
     <p>Created At: {{ $recipe -> created_at -> diffForHumans() }}</p>
     <p>Author: {{ $recipe -> user -> name }}</p>
 </x-layout>
