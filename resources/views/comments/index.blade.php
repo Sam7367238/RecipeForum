@@ -1,6 +1,8 @@
 <x-layout title="Comments">
     <h1>Comments</h1>
 
+    <a href="{{ route('recipes.show', $recipe) }}">Back</a>
+
     <a href="{{ route('recipes.comments.create', $recipe) }}">Create Comment</a>
 
     @foreach ($comments as $comment)
